@@ -21,8 +21,11 @@ const Post = ({ title, body, user, id }) => {
           Published by: <small className="text-sm">{user?.name}</small>
         </p>
         <p className="my-5">{body}</p>
-        <div>
+        <div className="flex gap-2">
           <Button onClick={toggle} grey>
+            Delete Post
+          </Button>
+          <Button onClick={toggle}>
             View all comments
           </Button>
         </div>

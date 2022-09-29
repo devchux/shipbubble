@@ -34,7 +34,7 @@ export const getUsers = () => {
       );
       dispatch(getAllUsers(data));
     } catch (error) {
-      dispatch(getUsersError(error.response.data));
+      dispatch(getUsersError(error?.response?.data));
     }
   };
 };
@@ -52,7 +52,7 @@ export const getPostsByUser = (userId) => {
       );
       dispatch(getAllPosts(data));
     } catch (error) {
-      dispatch(getPostsError(error.response.data));
+      dispatch(getPostsError(error?.response?.data));
     }
   };
 };
@@ -67,7 +67,7 @@ export const getComments = (postId) => {
         dispatch(getAllComments(data));
         return Promise.resolve(data)
       } catch (error) {
-        dispatch(getCommentsError(error.response.data));
+        dispatch(getCommentsError(error?.response?.data));
       }
     };
   };
@@ -78,11 +78,12 @@ export const createPost = (body) => {
     try {
       const { data } = await axios.post(
         `https://jsonplaceholder.typicode.com/posts`,
-        body
+        {...body}
       );
       dispatch(createNewPost(data));
     } catch (error) {
-      dispatch(getPostsError(error.response.data));
+        console.log(error.message)
+      dispatch(getPostsError(error?.response?.data));
     }
   };
 };

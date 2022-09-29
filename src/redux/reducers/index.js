@@ -18,7 +18,7 @@ export const reducer = (state = initialState, action) => {
         posts: {
           ...state.posts,
           loading: false,
-          list: [action.payload, ...state.posts.loading],
+          list: [action.payload, ...state.posts.list],
           error: "",
         },
       };
