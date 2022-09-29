@@ -52,7 +52,12 @@ export default function Home() {
         <div className="my-5">
           {posts.list.map(({ title, body, id, userId }) => (
             <div className="mb-3" key={id}>
-              <Post title={title} body={body} />
+              <Post
+                id={id}
+                title={title}
+                body={body}
+                user={users.list.find(({ id }) => id === userId)}
+              />
             </div>
           ))}
         </div>

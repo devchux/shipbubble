@@ -1,6 +1,7 @@
 const initialState = {
   posts: { list: [], loading: false, error: "" },
   users: { list: [], loading: false, error: "" },
+  comments: { list: [], loading: false, error: "" },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -9,6 +10,8 @@ export const reducer = (state = initialState, action) => {
       return { ...state, posts: { ...state.posts, loading: true } };
     case "USERS_LOADING":
       return { ...state, users: { ...state.users, loading: true } };
+    case "COMMENTS_LOADING":
+      return { ...state, comments: { ...state.comments, loading: true } };
     case "CREATE_POST":
       return {
         ...state,
@@ -24,6 +27,16 @@ export const reducer = (state = initialState, action) => {
         ...state,
         posts: {
           ...state.posts,
+          list: action.payload,
+          loading: false,
+          error: "",
+        },
+      };
+    case "GET_ALL_COMMENTS":
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
           list: action.payload,
           loading: false,
           error: "",
@@ -51,8 +64,17 @@ export const reducer = (state = initialState, action) => {
     case "GET_USERS_ERRORS":
       return {
         ...state,
-        errors: {
-          ...state.errors,
+        users: {
+          ...state.comments,
+          loading: false,
+          error: action.payload,
+        },
+      };
+    case "GET_COMMENTS_ERRORS":
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
           loading: false,
           error: action.payload,
         },

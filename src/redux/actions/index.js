@@ -2,10 +2,13 @@ import axios from "axios";
 
 const getAllPosts = (payload) => ({ type: "GET_ALL_POSTS", payload });
 const getAllUsers = (payload) => ({ type: "GET_ALL_USERS", payload });
+const getAllComments = (payload) => ({ type: "GET_ALL_COMMENTS", payload });
 const loadPost = () => ({ type: "POSTS_LOADING" });
 const loadUser = () => ({ type: "USERS_LOADING" });
+const loadComment = () => ({ type: "COMMENTS_LOADING" });
 const getPostsError = (payload) => ({ type: "GET_POSTS_ERRORS", payload });
 const getUsersError = (payload) => ({ type: "GET_USERS_ERRORS", payload });
+const getCommentsError = (payload) => ({ type: "GET_COMMENTS_ERRORS", payload });
 const createNewPost = (payload) => ({ type: "CREATE_POST", payload });
 
 export const getPosts = () => {
@@ -53,6 +56,21 @@ export const getPostsByUser = (userId) => {
     }
   };
 };
+
+export const getComments = (postId) => {
+    return async (dispatch) => {
+      dispatch(loadComment());
+      try {
+        const { data } = await axios.get(
+          `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+        );
+        dispatch(getAllComments(data));
+        return Promise.resolve(data)
+      } catch (error) {
+        dispatch(getCommentsError(error.response.data));
+      }
+    };
+  };
 
 export const createPost = (body) => {
   return async (dispatch) => {

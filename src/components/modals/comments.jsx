@@ -1,8 +1,10 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "../buttons/button";
+import { useSelector } from "react-redux";
 
 const Comments = ({ isOpen, toggle }) => {
+  const { comments } = useSelector((state) => state.state);
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={toggle}>
@@ -39,60 +41,16 @@ const Comments = ({ isOpen, toggle }) => {
                 <hr />
                 <div className="mt-2">
                   <div className="max-h-80 overflow-y-auto">
-                    <div className="py-2">
-                      <h4 className="mb-0">id labore ex et quam laborum</h4>
-                      <small>Eliseo@gardner.biz</small>
-                      <p className="mt-2 pb-2 text-sm text-gray-500">
-                        Your payment has been successfully submitted. We’ve sent
-                        you an email with all of the details of your order.
-                      </p>
-                      <hr />
-                    </div>
-                    <div className="py-2">
-                      <h4 className="mb-0">id labore ex et quam laborum</h4>
-                      <small>Eliseo@gardner.biz</small>
-                      <p className="mt-2 pb-2 text-sm text-gray-500">
-                        Your payment has been successfully submitted. We’ve sent
-                        you an email with all of the details of your order.
-                      </p>
-                      <hr />
-                    </div>
-                    <div className="py-2">
-                      <h4 className="mb-0">id labore ex et quam laborum</h4>
-                      <small>Eliseo@gardner.biz</small>
-                      <p className="mt-2 pb-2 text-sm text-gray-500">
-                        Your payment has been successfully submitted. We’ve sent
-                        you an email with all of the details of your order.
-                      </p>
-                      <hr />
-                    </div>
-                    <div className="py-2">
-                      <h4 className="mb-0">id labore ex et quam laborum</h4>
-                      <small>Eliseo@gardner.biz</small>
-                      <p className="mt-2 pb-2 text-sm text-gray-500">
-                        Your payment has been successfully submitted. We’ve sent
-                        you an email with all of the details of your order.
-                      </p>
-                      <hr />
-                    </div>
-                    <div className="py-2">
-                      <h4 className="mb-0">id labore ex et quam laborum</h4>
-                      <small>Eliseo@gardner.biz</small>
-                      <p className="mt-2 pb-2 text-sm text-gray-500">
-                        Your payment has been successfully submitted. We’ve sent
-                        you an email with all of the details of your order.
-                      </p>
-                      <hr />
-                    </div>
-                    <div className="py-2">
-                      <h4 className="mb-0">id labore ex et quam laborum</h4>
-                      <small>Eliseo@gardner.biz</small>
-                      <p className="mt-2 pb-2 text-sm text-gray-500">
-                        Your payment has been successfully submitted. We’ve sent
-                        you an email with all of the details of your order.
-                      </p>
-                      <hr />
-                    </div>
+                    {comments.list.map(({ id, name, email, body }) => (
+                      <div className="py-2" key={id}>
+                        <h4 className="mb-0">{name}</h4>
+                        <small>{email}</small>
+                        <p className="mt-2 pb-2 text-sm text-gray-500">
+                          {body}
+                        </p>
+                        <hr />
+                      </div>
+                    ))}
                   </div>
                 </div>
 
