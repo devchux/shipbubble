@@ -8,14 +8,15 @@ const Post = ({ title, body, user, id }) => {
   const [showComments, setShowComments] = useState(false);
   const dispatch = useDispatch();
 
-  const toggle = () => {
+  const open = () => {
     dispatch(getComments(id)).then(() => {
-      setShowComments(!showComments);
+      setShowComments(true);
     });
   };
+  const close = () => setShowComments(false);
   const onDelete = () => {
-    dispatch(deletePost(id))
-  }
+    dispatch(deletePost(id));
+  };
   return (
     <>
       <div className="rounded-lg border border-2 p-3 px-5">
@@ -28,12 +29,10 @@ const Post = ({ title, body, user, id }) => {
           <Button onClick={onDelete} grey>
             Delete Post
           </Button>
-          <Button onClick={toggle}>
-            View all comments
-          </Button>
+          <Button onClick={open}>View all comments</Button>
         </div>
       </div>
-      <Comments isOpen={showComments} toggle={toggle} />
+      <Comments isOpen={showComments} toggle={close} />
     </>
   );
 };
