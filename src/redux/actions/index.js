@@ -10,6 +10,7 @@ const getPostsError = (payload) => ({ type: "GET_POSTS_ERRORS", payload });
 const getUsersError = (payload) => ({ type: "GET_USERS_ERRORS", payload });
 const getCommentsError = (payload) => ({ type: "GET_COMMENTS_ERRORS", payload });
 const createNewPost = (payload) => ({ type: "CREATE_POST", payload });
+const removePost = (payload) => ({ type: "DELETE_POST", payload });
 
 export const getPosts = () => {
   return async (dispatch) => {
@@ -72,6 +73,20 @@ export const getComments = (postId) => {
     };
   };
 
+  export const deletePost = (postId) => {
+    return async (dispatch) => {
+      dispatch(loadPost());
+      try {
+        await axios.delete(
+          `https://jsonplaceholder.typicode.com/posts/${postId}`
+        );
+        dispatch(removePost(postId));
+      } catch (error) {
+        dispatch(getPostsError(error?.response?.data));
+      }
+    };
+  };
+
 export const createPost = (body) => {
   return async (dispatch) => {
     dispatch(loadPost());
@@ -82,7 +97,6 @@ export const createPost = (body) => {
       );
       dispatch(createNewPost(data));
     } catch (error) {
-        console.log(error.message)
       dispatch(getPostsError(error?.response?.data));
     }
   };

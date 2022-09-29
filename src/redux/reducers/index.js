@@ -22,6 +22,16 @@ export const reducer = (state = initialState, action) => {
           error: "",
         },
       };
+    case "DELETE_POST":
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          loading: false,
+          list: state.posts.list.filter(x => x.id !== action.payload),
+          error: "",
+        },
+      };
     case "GET_ALL_POSTS":
       return {
         ...state,

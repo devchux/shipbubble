@@ -22,8 +22,9 @@ export default function Home() {
     userId: 1,
   });
   const dispatch = useDispatch();
-  const { posts, users } = useSelector(({ state }) => state);
-  const { query } = useRouter()
+  const { posts, users, comments } = useSelector(({ state }) => state);
+  const { query } = useRouter();
+  const loading = posts.loading || users.loading || comments.loading;
 
   const onSelect = (user) => {
     dispatch(getPostsByUser(user.id));
@@ -51,7 +52,8 @@ export default function Home() {
       </Head>
       <div className="max-w-6xl m-auto p-4 sm:p-8">
         <div>
-          <div className="flex justify-end">
+          <div className="flex justify-between items-end">
+            <p>{loading && "Please wait..."}</p>
             <div className="w-full max-w-[200px]">
               <Users people={users.list} onSelect={onSelect} />
             </div>
@@ -70,7 +72,10 @@ export default function Home() {
           ))}
         </div>
         <div>
-          <Paginate totalPages={Math.ceil(posts.list.length / 10)} currentPage={+query.page || 1} />
+          <Paginate
+            totalPages={Math.ceil(posts.list.length / 10)}
+            currentPage={+query.page || 1}
+          />
         </div>
         <div className="max-w-lg mx-auto mt-12">
           <div className="mt-3">

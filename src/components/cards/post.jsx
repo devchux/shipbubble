@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getComments } from "../../redux/actions";
+import { getComments, deletePost } from "../../redux/actions";
 import Button from "../buttons/button";
 import Comments from "../modals/comments";
 
@@ -13,6 +13,9 @@ const Post = ({ title, body, user, id }) => {
       setShowComments(!showComments);
     });
   };
+  const onDelete = () => {
+    dispatch(deletePost(id))
+  }
   return (
     <>
       <div className="rounded-lg border border-2 p-3 px-5">
@@ -22,7 +25,7 @@ const Post = ({ title, body, user, id }) => {
         </p>
         <p className="my-5">{body}</p>
         <div className="flex gap-2">
-          <Button onClick={toggle} grey>
+          <Button onClick={onDelete} grey>
             Delete Post
           </Button>
           <Button onClick={toggle}>
