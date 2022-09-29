@@ -1,5 +1,6 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../src/components/buttons/button";
 import Post from "../src/components/cards/post";
@@ -22,6 +23,7 @@ export default function Home() {
   });
   const dispatch = useDispatch();
   const { posts, users } = useSelector(({ state }) => state);
+  const { query } = useRouter()
 
   const onSelect = (user) => {
     dispatch(getPostsByUser(user.id));
@@ -31,6 +33,12 @@ export default function Home() {
     if (!inputs.title || !inputs.body) return;
     dispatch(createPost(inputs));
   };
+
+  const currentPosts = useMemo(() => {
+    const firstPageIndex = (query.page - 1) * 10;
+    const lastPageIndex = firstPageIndex + 10;
+    return posts.list.slice(firstPageIndex, lastPageIndex);
+  }, [posts.list, query.page]);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -50,7 +58,7 @@ export default function Home() {
           </div>
         </div>
         <div className="my-5">
-          {posts.list.map(({ title, body, id, userId }) => (
+          {currentPosts.map(({ title, body, id, userId }) => (
             <div className="mb-3" key={id}>
               <Post
                 id={id}
@@ -62,7 +70,7 @@ export default function Home() {
           ))}
         </div>
         <div>
-          <Paginate />
+          <Paginate totalPages={Math.ceil(posts.list.length / 10)} currentPage={+query.page || 1} />
         </div>
         <div className="max-w-lg mx-auto mt-12">
           <div className="mt-3">
