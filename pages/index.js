@@ -36,7 +36,7 @@ export default function Home() {
   };
 
   const currentPosts = useMemo(() => {
-    const firstPageIndex = (query.page - 1) * 10;
+    const firstPageIndex = ((query.page || 1) - 1) * 10;
     const lastPageIndex = firstPageIndex + 10;
     return posts.list.slice(firstPageIndex, lastPageIndex);
   }, [posts.list, query.page]);
